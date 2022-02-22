@@ -1,5 +1,6 @@
 import MainScene from './MainScene.js';
-
+// import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
+console.log(PhaserMatterCollisionPlugin);
 const config = {
   width: 512,
   height: 512,
@@ -20,7 +21,7 @@ const config = {
   },
   plugins: {
     scene: [
-      { plugin: PhaserMatterCollisionPlugin,
+      { plugin: PhaserMatterCollisionPlugin.default,
         key: 'matterCollision',
         mapping: 'matterCollision',
       }
