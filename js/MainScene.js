@@ -1,14 +1,16 @@
 import Player from './Player.js';
 import Resource from './Resource.js';
-
+import Enemy from './Enemy.js';
 export default class MainScene extends Phaser.Scene {
   constructor() {
     super("MainScene");
+    this.enemies = [];
   }
   
   preload() {
     Player.preload(this);
-    Resource.preload(this)
+    Resource.preload(this);
+    Enemy.preload(this);
     this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
     this.load.tilemapTiledJSON('map', 'assets/images/map.json');
   }
@@ -22,6 +24,7 @@ export default class MainScene extends Phaser.Scene {
     layer1.setCollisionByProperty({ collides: true });
     this.matter.world.convertTilemapLayer(layer1);
     this.map.getObjectLayer('Resources').objects.forEach(resource => new Resource({ scene: this, resource }));
+    this.map.getObjectLayer('Enemies').objects.forEach(enemy => this.enemies.push(new Enemy({ scene: this, enemy })));
     
     this.player = new Player({ scene: this, x: 200, y: 200, texture: 'female', frame: 'townsfolk_f_idle_1' });
     let textPlayer = new Player({ scene: this, x:100, y: 100, texture: 'female', frame: 'townsfolk_f_idle_1' });
@@ -34,6 +37,7 @@ export default class MainScene extends Phaser.Scene {
   }
   
   update() {
+    this.enemies.forEach(enemy => enemy.update());
     this.player.update();
   }
 }
